@@ -24,7 +24,7 @@ h1 {
 }
 
 form {
-  display: block;
+  display: none;
   width: 800px;
   margin: 15px auto;
   padding: 20px;
