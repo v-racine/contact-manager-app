@@ -1,14 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <script src="/javascripts/jquery.js"></script>
-  <script src="/javascripts/handlebars.js"></script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="/javascripts/jquery.js"></script>
+    <script src="/javascripts/handlebars.js"></script>
+  </head>
+  <body>
+    <h1>Contact Manager</h1>
 
-</body>
+    <button id="add-contact">Add Contact</button>
+
+    <form action="#" method="post" novalidate>
+      <p class="form_errors"></p>
+      <fieldset>
+        <dl>
+          <dt>
+            <label for="full-name">Full Name</label>
+          </dt>
+          <dd>
+            <input type="text" id="full_name" name="full_name" required />
+            <span class="error_message">Full Name is a required field.</span>
+          </dd>
+          <dt>
+            <label for="email">Email</label>
+          </dt>
+          <dd>
+            <input
+              type="text"
+              required
+              name="email"
+              id="email"
+              placeholder="someone@example.com"
+              pattern=".+@.+"
+            />
+            <span class="error_message">Email is a required field.</span>
+          </dd>
+          <dt>
+            <label for="phone">Phone Number</label>
+          </dt>
+          <dd>
+            <input
+              type="text"
+              name="phone"
+              id="phone"
+              pattern="\d{3}-\d{3}-\d{4}"
+              placeholder="111-222-3333"
+            />
+            <span class="error_message"></span>
+          </dd>
+
+          <button type="submit">Submit</button>
+          <button type="submit">Cancel</button>
+        </dl>
+      </fieldset>
+    </form>
+  </body>
 </html>
