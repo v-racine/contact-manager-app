@@ -104,3 +104,31 @@ figure.image img {
   height: 50px;
   margin-right: 10px;
 }
+
+.contact {
+  /* Box appearance */
+  border: 1px solid #ccc; /* A light border */
+  border-radius: 8px; /* Rounded corners for a softer look */
+  padding: 15px; /* Space inside the box */
+  margin: 20px auto; /* Space outside and center the box on the page */
+  max-width: 400px; /* Limits the box width */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+
+  /* Typography */
+  font-family: Arial, sans-serif; /* A clear, readable font */
+  line-height: 1.6; /* Good spacing between lines */
+}
+
+/* Optional: Styling for the content inside */
+.media h2 {
+  color: #333; /* Darker color for a title if you have one */
+  margin-top: 0; /* Remove top margin from title */
+  border-bottom: 1px solid #eee; /* Separator line */
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.media p {
+  margin: 5px 0; /* Space out the individual info lines */
+  color: #555; /* Slightly lighter text color */
+}
