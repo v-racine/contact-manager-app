@@ -2,8 +2,12 @@
   box-sizing: border-box;
 }
 
+html {
+  background-color: #282c34; /* A dark, slightly cool grey */
+}
+
 body {
-  background: rgb(89, 23, 23);
+  background: rgb(101, 112, 160);
   font-size: 18px;
   display: block;
   margin: 8px;
@@ -15,12 +19,12 @@ h1 {
   margin: 70px auto 0 auto;
 }
 
-b {
+.label-text {
   color: white;
 }
 
 form {
-  display: none;
+  display: block;
   width: 800px;
   margin: 15px auto;
   padding: 20px;
@@ -29,15 +33,10 @@ form {
 }
 
 fieldset {
-  display: block;
   min-inline-size: min-content;
   margin-inline: 2px;
-  border-width: 2px;
-  border-style: groove;
-  border-color: threedface;
-  border-image: initial;
-  padding-block: 0.35em 0.625em;
-  padding-inline: 0.75em;
+  border: 2px groove #c0c0c0;
+  padding: 0.35em 0.75em 0.625em;
 }
 
 .form_errors,
@@ -69,12 +68,12 @@ figure.image {
   background-color: black;
 }
 
-figure .image img {
+figure.image img {
   width: 128px;
 }
 
 .notification {
-  margin-top: 20px !important;
+  margin-top: 20px;
 }
 
 .results {
