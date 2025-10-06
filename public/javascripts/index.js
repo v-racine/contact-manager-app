@@ -109,4 +109,8 @@ const contactTemplate = (contactData) => {
 
 //Add new contact
 const addContactBtn = document.querySelector("#add-contact");
-console.log(addContactBtn);
+const form = document.querySelector("form");
+
+addContactBtn.addEventListener("click", (e) => {
+  form.style.display = "block";
+});
