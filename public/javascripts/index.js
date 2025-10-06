@@ -1,9 +1,9 @@
-const allContactsUrl = "http://localhost:3000/api/contacts";
+const baseURL = "http://localhost:3000";
 
 //fetch for all contacts
-const fetchAllContacts = async () => {
+const fetchData = async (path) => {
   try {
-    const url = new URL(allContactsUrl);
+    const url = new URL(baseURL + path);
     // url.search = new URLSearchParams({
     //   ...params,
     // });
@@ -25,9 +25,10 @@ const searchInputEle = document.querySelector("#search-input");
 const dropdown = document.querySelector(".dropdown");
 const resultsWrapper = document.querySelector(".results");
 
+//all contacts search
 const onInput = async (e) => {
   const searchTerm = e.target.value.toLowerCase();
-  const contacts = await fetchAllContacts();
+  const contacts = await fetchData("/api/contacts");
 
   if (!contacts) {
     dropdown.classList.remove("is-active");
@@ -52,11 +53,10 @@ const onInput = async (e) => {
     option.classList.add("dropdown-item");
     option.textContent = contact.full_name;
 
-    // option.addEventListener("click", (e) => {
-    //   dropdown.classList.remove("is-active");
-    //   input.value = inputValue(item);
-    //   onOptionSelect(item);
-    // });
+    option.addEventListener("click", (e) => {
+      dropdown.classList.remove("is-active");
+      onContactSelect(contact.id);
+    });
 
     resultsWrapper.appendChild(option);
   }
@@ -69,3 +69,26 @@ document.addEventListener("click", (e) => {
     dropdown.classList.remove("is-active");
   }
 });
+
+//single contact selection
+const onContactSelect = async (contactId) => {
+  const contactData = await fetchData(`/api/contacts/${contactId}`);
+  const contactContainer = document.querySelector(".contact-container");
+  contactContainer.innerHTML = contactTemplate(contactData);
+
+  console.log(contactData);
+};
+
+const contactTemplate = (contactData) => {
+  return `
+    <article class="media">
+      <div class="media-content">
+        <div class="content">
+          <h4>${contactData.full_name}</h4>
+          <p>${contactData.email}</p>
+          <p>${contactData.phone_number}</p>
+        </div>
+      </div>
+    </article>
+  `;
+};
