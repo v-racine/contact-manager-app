@@ -26,6 +26,7 @@ const dropdown = document.querySelector(".dropdown");
 const resultsWrapper = document.querySelector(".results");
 
 const onInput = async (e) => {
+  const searchTerm = e.target.value.toLowerCase();
   const contacts = await fetchAllContacts();
 
   if (!contacts) {
@@ -35,9 +36,17 @@ const onInput = async (e) => {
 
   resultsWrapper.innerHTML = "";
 
+  const filteredContacts = contacts.filter((contact) => {
+    return contact.full_name.toLowerCase().includes(searchTerm);
+  });
+
+  if (!filteredContacts.length || searchTerm) {
+    dropdown.classList.remove("is-active");
+  }
+
   dropdown.classList.add("is-active");
 
-  for (let contact of contacts) {
+  for (let contact of filteredContacts) {
     const option = document.createElement("a");
 
     option.classList.add("dropdown-item");
