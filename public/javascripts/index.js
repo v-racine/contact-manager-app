@@ -13,7 +13,6 @@ const fetchData = async (path) => {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
-    console.log(data); //temporary for dev
     return data;
   } catch (error) {
     console.error("Could not fetch data:", error);
@@ -73,22 +72,37 @@ document.addEventListener("click", (e) => {
 //single contact selection
 const onContactSelect = async (contactId) => {
   const contactData = await fetchData(`/api/contacts/${contactId}`);
+
+  if (!contactData) return;
+
   const contactContainer = document.querySelector(".contact-container");
-  contactContainer.innerHTML = contactTemplate(contactData);
+  contactContainer.appendChild(contactTemplate(contactData));
 
   console.log(contactData);
 };
 
 const contactTemplate = (contactData) => {
-  return `
-    <article class="media">
-      <div class="media-content">
-        <div class="content">
-          <h4>${contactData.full_name}</h4>
-          <p>${contactData.email}</p>
-          <p>${contactData.phone_number}</p>
-        </div>
-      </div>
-    </article>
-  `;
+  const article = document.createElement("article");
+  article.className = "contact";
+
+  const mediaContent = document.createElement("div");
+  mediaContent.className = "contact-content";
+
+  const content = document.createElement("div");
+  content.className = "content";
+
+  const h4 = document.createElement("h2");
+  h4.textContent = contactData.full_name;
+
+  const pEmail = document.createElement("p");
+  pEmail.textContent = contactData.email;
+
+  const pPhone = document.createElement("p");
+  pPhone.textContent = contactData.phone_number;
+
+  content.append(h4, pEmail, pPhone);
+  mediaContent.appendChild(content);
+  article.appendChild(mediaContent);
+
+  return article;
 };
