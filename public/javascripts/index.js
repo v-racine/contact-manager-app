@@ -1,6 +1,6 @@
 const baseURL = "http://localhost:3000";
 
-//fetch for all contacts
+//GET fetch for contacts
 const fetchData = async (path) => {
   try {
     const url = new URL(baseURL + path);
@@ -106,3 +106,7 @@ const contactTemplate = (contactData) => {
 
   return article;
 };
+
+//Add new contact
+const addContactBtn = document.querySelector("#add-contact");
+console.log(addContactBtn);
