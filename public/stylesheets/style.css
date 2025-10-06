@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: rgb(89, 23, 23);
+  font-size: 18px;
+  display: block;
+  margin: 8px;
+}
+
+h1 {
+  color: white;
+  font-size: 42px;
+  margin: 70px auto 0 auto;
+}
+
+b {
+  color: white;
+}
+
+form {
+  display: none;
+  width: 800px;
+  margin: 15px auto;
+  padding: 20px;
+  border-radius: 4px;
+  background: white;
+}
+
+fieldset {
+  display: block;
+  min-inline-size: min-content;
+  margin-inline: 2px;
+  border-width: 2px;
+  border-style: groove;
+  border-color: threedface;
+  border-image: initial;
+  padding-block: 0.35em 0.625em;
+  padding-inline: 0.75em;
+}
+
+.form_errors,
+.error_message {
+  color: #a93333;
+  display: none;
+}
+
+.error_message {
+  display: none;
+  margin-left: 30px;
+}
+
+.invalid_field {
+  border: 2px solid #dc3545; /* Red border */
+  background-color: #fff8f8; /* Light pink background */
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.5); /* Subtle red glow */
+}
+
+.tutorial {
+  width: 600px;
+  text-align: center;
+  margin: auto;
+}
+
+figure.image {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+}
+
+figure .image img {
+  width: 128px;
+}
+
+.notification {
+  margin-top: 20px !important;
+}
+
+.results {
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.title .icon {
+  margin-left: 15px;
+}
+
+.hero {
+  margin-bottom: 20px;
+}
+
+.forms {
+  display: flex;
+  justify-content: space-around;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
+.dropdown-item img {
+  height: 50px;
+  margin-right: 10px;
+}
