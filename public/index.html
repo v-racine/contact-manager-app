@@ -8,25 +8,34 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+      integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc="
+      crossorigin="anonymous"
     />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"
+      integrity="sha256-ujE/ZUB6CMZmyJSgQjXGCF4sRRneOimQplBVLu8OU5w="
+      crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/stylesheets/style.css" />
 
     <title>Contact Manager</title>
     <script src="/javascripts/jquery.js"></script>
     <script src="/javascripts/handlebars.js"></script>
-    <script src="/javascripts/utils.js"></script>
-    <script src="/javascripts/fetchers.js"></script>
-    <script src="/javascripts/index.js"></script>
+    <script src="/javascripts/utils.js" defer></script>
+    <script src="/javascripts/fetchers.js" defer></script>
+    <script src="/javascripts/index.js" defer></script>
   </head>
   <body>
     <h1>Contact Manager</h1>
 
-    <label><b>Search</b></label>
-    <input class="input" type="text" placeholder="contact name" />
+    <label for="search-input"><b class="label-text">Search</b></label>
+    <input
+      id="search-input"
+      class="input"
+      type="text"
+      placeholder="contact name"
+    />
     <div class="dropdown">
       <div class="dropdown-menu">
         <div class="dropdown-content results"></div>
