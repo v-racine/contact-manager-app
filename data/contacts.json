@@ -26,5 +26,26 @@
     "email": "vracine21@gmail.com",
     "tags": null,
     "id": 4
+  },
+  {
+    "full_name": "Wesley Lokum",
+    "phone_number": "413-406-9923",
+    "email": "wes@lokum.ca",
+    "tags": null,
+    "id": 5
+  },
+  {
+    "full_name": "Slip ",
+    "phone_number": "213-622-1277",
+    "email": "slip@slippery.com",
+    "tags": null,
+    "id": 6
+  },
+  {
+    "full_name": "Larry",
+    "phone_number": "245-443-2424",
+    "email": "ld@curb.com",
+    "tags": null,
+    "id": 7
   }
 ]

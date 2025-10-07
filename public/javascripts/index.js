@@ -155,9 +155,11 @@ const postNewData = async (path, data) => {
 
     if (submission.status === 201) {
       // STUB: Add message for user
+      const responseData = await submission.json();
       console.log(
-        `This contact was sucessfully added: ${await submission.text()}`
+        `This contact was sucessfully added: ${JSON.stringify(responseData)}`
       );
+      return responseData;
     } else {
       throw new Error(`HTTP request error: ${submission.status}`);
     }
@@ -166,5 +168,6 @@ const postNewData = async (path, data) => {
     // message.textContent =
     //   "Sorry, something went wrong. Please try again later.";
     console.error(err);
+    return null;
   }
 };

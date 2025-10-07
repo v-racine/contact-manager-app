@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const cancelBtn = document.querySelector("#cancel");
 
   const fullNameInput = document.getElementById("full_name");
-  const phoneInput = form.querySelector("#phone");
+  const emailInput = document.getElementById("email");
+  const phoneInput = document.getElementById("phone");
 
   function validateField(field) {
     const errorMessage = field.nextElementSibling;
@@ -42,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  fullNameInput.addEventListener("keypress", (e) => {
+  fullNameInput.addEventListener("keydown", (e) => {
     const errorMessage = fullNameInput.nextElementSibling;
     const isValidChar = /[a-zA-Z'\s]/.test(e.key);
 
@@ -77,21 +78,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (form.checkValidity()) {
       formErrors.style.display = "none";
-      //STUB get data, serialize it, and send it
-      let inputValues = [];
-      fields.forEach((field) => {
-        inputValues.push(field.value);
-      });
 
-      let inputData = {
-        full_name: inputValues[0],
-        email: inputValues[1],
-        phone_number: inputValues[2],
+      const inputData = {
+        full_name: fullNameInput.value,
+        email: emailInput.value,
+        phone_number: phoneInput.value,
       };
-
       let JSONdata = JSON.stringify(inputData);
-      const newContactSubmission = await postNewData("/api/contacts", JSONdata);
+
+      await postNewData("/api/contacts", JSONdata);
+
       alert("Form submitted successfully!");
+      form.reset();
+      form.style.display = "none";
     } else {
       formErrors.textContent =
         "Form cannot be submitted until errors are corrected.";
@@ -100,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   cancelBtn.addEventListener("click", () => {
+    form.reset();
     form.style.display = "none";
   });
 });
