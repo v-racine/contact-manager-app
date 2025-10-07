@@ -1,7 +1,5 @@
-// const baseURL = "http://localhost:3000";
-
-// const GENERIC_ERROR_MESSAGE =
-//   "Sorry, something went wrong. Please try again later.";
+const GENERIC_ERROR_MESSAGE =
+  "Sorry, something went wrong. Please try again later.";
 
 const searchInputEle = document.querySelector("#search-input");
 const dropdown = document.querySelector(".dropdown");
@@ -31,37 +29,38 @@ const message = document.querySelector("#message-for-user");
 // contacts search
 const onInput = async (e) => {
   const searchTerm = e.target.value.toLowerCase();
-  const contacts = await fetchData("/api/contacts");
+  try {
+    const contacts = await fetchData("/api/contacts");
 
-  if (!contacts) {
-    dropdown.classList.remove("is-active");
-    return;
-  }
+    resultsWrapper.innerHTML = "";
 
-  resultsWrapper.innerHTML = "";
-
-  const filteredContacts = contacts.filter((contact) => {
-    return contact.full_name.toLowerCase().includes(searchTerm);
-  });
-
-  if (!filteredContacts.length || searchTerm) {
-    dropdown.classList.remove("is-active");
-  }
-
-  dropdown.classList.add("is-active");
-
-  for (let contact of filteredContacts) {
-    const option = document.createElement("a");
-
-    option.classList.add("dropdown-item");
-    option.textContent = contact.full_name;
-
-    option.addEventListener("click", (e) => {
-      dropdown.classList.remove("is-active");
-      onContactSelect(contact.id);
+    const filteredContacts = contacts.filter((contact) => {
+      return contact.full_name.toLowerCase().includes(searchTerm);
     });
 
-    resultsWrapper.appendChild(option);
+    if (!filteredContacts.length || searchTerm) {
+      dropdown.classList.remove("is-active");
+    }
+
+    dropdown.classList.add("is-active");
+
+    for (let contact of filteredContacts) {
+      const option = document.createElement("a");
+
+      option.classList.add("dropdown-item");
+      option.textContent = contact.full_name;
+
+      option.addEventListener("click", (e) => {
+        dropdown.classList.remove("is-active");
+        onContactSelect(contact.id);
+      });
+
+      resultsWrapper.appendChild(option);
+    }
+  } catch (error) {
+    message.textContent = GENERIC_ERROR_MESSAGE;
+    console.error("Could not search contacts:", error);
+    return;
   }
 };
 
@@ -77,35 +76,71 @@ document.addEventListener("click", (e) => {
 //all contacts display
 const allContactsBtn = document.querySelector("#all-contacts");
 
+// const onAllContacts = async () => {
+//   const contacts = await fetchData("/api/contacts");
+//   if (!contacts) return;
+
+//   form.style.display = "none";
+//   message.textContent = "";
+//   contactContainer.textContent = "";
+//   const fragment = document.createDocumentFragment();
+
+//   for (let contact of contacts) {
+//     const contactDisplay = contactTemplate(contact);
+//     fragment.appendChild(contactDisplay);
+//   }
+
+//   contactContainer.appendChild(fragment);
+// };
+
 const onAllContacts = async () => {
-  const contacts = await fetchData("/api/contacts");
-  if (!contacts) return;
+  try {
+    const contacts = await fetchData("/api/contacts");
 
-  form.style.display = "none";
-  message.textContent = "";
-  contactContainer.textContent = "";
-  const fragment = document.createDocumentFragment();
+    form.style.display = "none";
+    message.textContent = "";
+    contactContainer.textContent = "";
 
-  for (let contact of contacts) {
-    const contactDisplay = contactTemplate(contact);
-    fragment.appendChild(contactDisplay);
+    const fragment = document.createDocumentFragment();
+    contacts.forEach((contact) => {
+      fragment.appendChild(contactTemplate(contact));
+    });
+    contactContainer.appendChild(fragment);
+  } catch (error) {
+    message.textContent = GENERIC_ERROR_MESSAGE;
+    console.error("Could not fetch all contacts:", error);
+    return;
   }
-
-  contactContainer.appendChild(fragment);
 };
 
 allContactsBtn.addEventListener("click", onAllContacts);
 
 //single contact selection
+// const onContactSelect = async (contactId) => {
+//   const contactData = await fetchData(`/api/contacts/${contactId}`);
+
+//   if (!contactData) return;
+
+//   form.style.display = "none";
+//   message.textContent = "";
+//   contactContainer.textContent = "";
+//   contactContainer.appendChild(contactTemplate(contactData));
+// };
+
 const onContactSelect = async (contactId) => {
-  const contactData = await fetchData(`/api/contacts/${contactId}`);
+  try {
+    const contactData = await fetchData(`/api/contacts/${contactId}`);
 
-  if (!contactData) return;
+    form.style.display = "none";
+    message.textContent = "";
+    contactContainer.textContent = "";
 
-  form.style.display = "none";
-  message.textContent = "";
-  contactContainer.textContent = "";
-  contactContainer.appendChild(contactTemplate(contactData));
+    contactContainer.appendChild(contactTemplate(contactData));
+  } catch (error) {
+    message.textContent = GENERIC_ERROR_MESSAGE;
+    console.error(`Could not fetch contact with ID ${contactId}:`, error);
+    return;
+  }
 };
 
 // const contactTemplate = (contactData) => {
