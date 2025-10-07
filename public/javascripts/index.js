@@ -4,9 +4,6 @@ const baseURL = "http://localhost:3000";
 const fetchData = async (path) => {
   try {
     const url = new URL(baseURL + path);
-    // url.search = new URLSearchParams({
-    //   ...params,
-    // });
 
     const response = await fetch(url);
     if (!response.ok) {
@@ -23,8 +20,9 @@ const fetchData = async (path) => {
 const searchInputEle = document.querySelector("#search-input");
 const dropdown = document.querySelector(".dropdown");
 const resultsWrapper = document.querySelector(".results");
+const contactContainer = document.querySelector(".contact-container");
 
-//all contacts search
+// contacts search
 const onInput = async (e) => {
   const searchTerm = e.target.value.toLowerCase();
   const contacts = await fetchData("/api/contacts");
@@ -63,11 +61,32 @@ const onInput = async (e) => {
 
 searchInputEle.addEventListener("input", debounce(onInput));
 
+//click out of search's dropdown menu
 document.addEventListener("click", (e) => {
   if (!searchInputEle.contains(e.target)) {
     dropdown.classList.remove("is-active");
   }
 });
+
+//all contacts display
+const allContactsBtn = document.querySelector("#all-contacts");
+
+const onAllContacts = async () => {
+  const contacts = await fetchData("/api/contacts");
+  if (!contacts) return;
+
+  contactContainer.textContent = "";
+  const fragment = document.createDocumentFragment();
+
+  for (let contact of contacts) {
+    const contactDisplay = contactTemplate(contact);
+    fragment.appendChild(contactDisplay);
+  }
+
+  contactContainer.appendChild(fragment);
+};
+
+allContactsBtn.addEventListener("click", onAllContacts);
 
 //single contact selection
 const onContactSelect = async (contactId) => {
@@ -75,10 +94,8 @@ const onContactSelect = async (contactId) => {
 
   if (!contactData) return;
 
-  const contactContainer = document.querySelector(".contact-container");
+  contactContainer.textContent = "";
   contactContainer.appendChild(contactTemplate(contactData));
-
-  console.log(contactData);
 };
 
 const contactTemplate = (contactData) => {
@@ -112,5 +129,6 @@ const addContactBtn = document.querySelector("#add-contact");
 const form = document.querySelector("form");
 
 addContactBtn.addEventListener("click", () => {
+  contactContainer.textContent = "";
   form.style.display = "block";
 });
