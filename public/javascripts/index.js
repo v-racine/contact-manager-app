@@ -1,5 +1,13 @@
 const baseURL = "http://localhost:3000";
 
+const GENERIC_ERROR_MESSAGE =
+  "Sorry, something went wrong. Please try again later.";
+const searchInputEle = document.querySelector("#search-input");
+const dropdown = document.querySelector(".dropdown");
+const resultsWrapper = document.querySelector(".results");
+const contactContainer = document.querySelector(".contact-container");
+const message = document.querySelector("#message-for-user");
+
 //GET fetch for contacts
 const fetchData = async (path) => {
   try {
@@ -9,18 +17,15 @@ const fetchData = async (path) => {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
+    message.textContent = "";
     const data = await response.json();
     return data;
   } catch (error) {
+    message.textContent = GENERIC_ERROR_MESSAGE;
     console.error("Could not fetch data:", error);
     return null;
   }
 };
-
-const searchInputEle = document.querySelector("#search-input");
-const dropdown = document.querySelector(".dropdown");
-const resultsWrapper = document.querySelector(".results");
-const contactContainer = document.querySelector(".contact-container");
 
 // contacts search
 const onInput = async (e) => {
@@ -75,6 +80,7 @@ const onAllContacts = async () => {
   const contacts = await fetchData("/api/contacts");
   if (!contacts) return;
 
+  message.textContent = "";
   contactContainer.textContent = "";
   const fragment = document.createDocumentFragment();
 
@@ -94,6 +100,7 @@ const onContactSelect = async (contactId) => {
 
   if (!contactData) return;
 
+  message.textContent = "";
   contactContainer.textContent = "";
   contactContainer.appendChild(contactTemplate(contactData));
 };
@@ -137,6 +144,7 @@ const addContactBtn = document.querySelector("#add-contact");
 const form = document.querySelector("form");
 
 addContactBtn.addEventListener("click", () => {
+  message.textContent = "";
   contactContainer.textContent = "";
   form.style.display = "block";
 });
@@ -154,7 +162,7 @@ const postNewData = async (path, data) => {
     });
 
     if (submission.status === 201) {
-      // STUB: Add message for user
+      message.textContent = "";
       const responseData = await submission.json();
       console.log(
         `This contact was sucessfully added: ${JSON.stringify(responseData)}`
@@ -164,10 +172,8 @@ const postNewData = async (path, data) => {
       throw new Error(`HTTP request error: ${submission.status}`);
     }
   } catch (err) {
-    // STUB: Add message for user
-    // message.textContent =
-    //   "Sorry, something went wrong. Please try again later.";
-    console.error(err);
+    message.textContent = GENERIC_ERROR_MESSAGE;
+    console.error("Could not send data:", err);
     return null;
   }
 };
