@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const message = document.querySelector("#message-for-user");
+  const GENERIC_ERROR_MESSAGE =
+    "Sorry, something went wrong. Please try again later.";
+
   const form = document.querySelector("form");
   const fields = form.querySelectorAll("input");
   const formErrors = document.querySelector(".form_errors");
@@ -86,11 +90,17 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       let JSONdata = JSON.stringify(inputData);
 
-      await postNewData("/api/contacts", JSONdata);
+      try {
+        await postNewData("/api/contacts", JSONdata);
 
-      alert("Form submitted successfully!");
-      form.reset();
-      form.style.display = "none";
+        alert("Form submitted successfully!");
+        form.reset();
+        form.style.display = "none";
+      } catch (error) {
+        // Handle errors thrown by postNewData
+        message.textContent = GENERIC_ERROR_MESSAGE;
+        console.error("Error submitting contact:", error);
+      }
     } else {
       formErrors.textContent =
         "Form cannot be submitted until errors are corrected.";
