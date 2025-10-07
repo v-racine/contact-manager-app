@@ -56,12 +56,6 @@ fieldset {
   box-shadow: 0 0 5px rgba(220, 53, 69, 0.5); /* Subtle red glow */
 }
 
-.tutorial {
-  width: 600px;
-  text-align: center;
-  margin: auto;
-}
-
 figure.image {
   display: flex;
   justify-content: center;

@@ -71,16 +71,19 @@ document.addEventListener("click", (e) => {
 //all contacts display
 const allContactsBtn = document.querySelector("#all-contacts");
 
-const onAllContacts = async (e) => {
+const onAllContacts = async () => {
   const contacts = await fetchData("/api/contacts");
   if (!contacts) return;
 
   contactContainer.textContent = "";
+  const fragment = document.createDocumentFragment();
+
   for (let contact of contacts) {
-    let contactDisplay = contactTemplate(contact);
-    console.log(contactDisplay);
-    contactContainer.appendChild(contactDisplay);
+    const contactDisplay = contactTemplate(contact);
+    fragment.appendChild(contactDisplay);
   }
+
+  contactContainer.appendChild(fragment);
 };
 
 allContactsBtn.addEventListener("click", onAllContacts);
@@ -126,5 +129,6 @@ const addContactBtn = document.querySelector("#add-contact");
 const form = document.querySelector("form");
 
 addContactBtn.addEventListener("click", () => {
+  contactContainer.textContent = "";
   form.style.display = "block";
 });
