@@ -117,7 +117,13 @@ const contactTemplate = (contactData) => {
   const pPhone = document.createElement("p");
   pPhone.textContent = `Phone #: ${contactData.phone_number}`;
 
-  content.append(h4, pEmail, pPhone);
+  const editBtn = document.createElement("button");
+  editBtn.textContent = "Edit";
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+
+  content.append(h4, pEmail, pPhone, editBtn, deleteBtn);
   mediaContent.appendChild(content);
   article.appendChild(mediaContent);
 
