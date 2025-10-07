@@ -115,7 +115,7 @@ const contactTemplate = (contactData) => {
   pEmail.textContent = contactData.email;
 
   const pPhone = document.createElement("p");
-  pPhone.textContent = contactData.phone_number;
+  pPhone.textContent = `Phone #: ${contactData.phone_number}`;
 
   content.append(h4, pEmail, pPhone);
   mediaContent.appendChild(content);

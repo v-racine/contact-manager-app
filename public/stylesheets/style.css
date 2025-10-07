@@ -23,6 +23,11 @@ h1 {
   color: white;
 }
 
+.input {
+  width: 200px;
+  height: 30px;
+}
+
 form {
   display: none;
   width: 800px;
