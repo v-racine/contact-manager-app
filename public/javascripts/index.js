@@ -117,14 +117,22 @@ const contactTemplate = (contactData) => {
   const pPhone = document.createElement("p");
   pPhone.textContent = `Phone #: ${contactData.phone_number}`;
 
-  content.append(h4, pEmail, pPhone);
+  const editBtn = document.createElement("button");
+  editBtn.className = "button is-info is-light is-small is-rounded";
+  editBtn.textContent = "Edit";
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.className = "button is-danger is-light is-small is-rounded";
+  deleteBtn.textContent = "Delete";
+
+  content.append(h4, pEmail, pPhone, editBtn, deleteBtn);
   mediaContent.appendChild(content);
   article.appendChild(mediaContent);
 
   return article;
 };
 
-//Add new contact
+//Add new contact button
 const addContactBtn = document.querySelector("#add-contact");
 const form = document.querySelector("form");
 
