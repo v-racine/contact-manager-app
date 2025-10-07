@@ -118,9 +118,11 @@ const contactTemplate = (contactData) => {
   pPhone.textContent = `Phone #: ${contactData.phone_number}`;
 
   const editBtn = document.createElement("button");
+  editBtn.className = "button is-info is-light is-small is-rounded";
   editBtn.textContent = "Edit";
 
   const deleteBtn = document.createElement("button");
+  deleteBtn.className = "button is-danger is-light is-small is-rounded";
   deleteBtn.textContent = "Delete";
 
   content.append(h4, pEmail, pPhone, editBtn, deleteBtn);
@@ -130,7 +132,7 @@ const contactTemplate = (contactData) => {
   return article;
 };
 
-//Add new contact
+//Add new contact button
 const addContactBtn = document.querySelector("#add-contact");
 const form = document.querySelector("form");
 
