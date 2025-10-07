@@ -1,31 +1,32 @@
-const baseURL = "http://localhost:3000";
+// const baseURL = "http://localhost:3000";
 
-const GENERIC_ERROR_MESSAGE =
-  "Sorry, something went wrong. Please try again later.";
+// const GENERIC_ERROR_MESSAGE =
+//   "Sorry, something went wrong. Please try again later.";
+
 const searchInputEle = document.querySelector("#search-input");
 const dropdown = document.querySelector(".dropdown");
 const resultsWrapper = document.querySelector(".results");
 const contactContainer = document.querySelector(".contact-container");
 const message = document.querySelector("#message-for-user");
 
-//GET fetch for contacts
-const fetchData = async (path) => {
-  try {
-    const url = new URL(baseURL + path);
+// //GET fetch for contacts
+// const fetchData = async (path) => {
+//   try {
+//     const url = new URL(baseURL + path);
 
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    message.textContent = "";
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    message.textContent = GENERIC_ERROR_MESSAGE;
-    console.error("Could not fetch data:", error);
-    return null;
-  }
-};
+//     const response = await fetch(url);
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
+//     message.textContent = "";
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     message.textContent = GENERIC_ERROR_MESSAGE;
+//     console.error("Could not fetch data:", error);
+//     return null;
+//   }
+// };
 
 // contacts search
 const onInput = async (e) => {
@@ -80,6 +81,7 @@ const onAllContacts = async () => {
   const contacts = await fetchData("/api/contacts");
   if (!contacts) return;
 
+  form.style.display = "none";
   message.textContent = "";
   contactContainer.textContent = "";
   const fragment = document.createDocumentFragment();
@@ -100,46 +102,47 @@ const onContactSelect = async (contactId) => {
 
   if (!contactData) return;
 
+  form.style.display = "none";
   message.textContent = "";
   contactContainer.textContent = "";
   contactContainer.appendChild(contactTemplate(contactData));
 };
 
-const contactTemplate = (contactData) => {
-  const article = document.createElement("article");
-  article.className = "contact";
+// const contactTemplate = (contactData) => {
+//   const article = document.createElement("article");
+//   article.className = "contact";
 
-  const mediaContent = document.createElement("div");
-  mediaContent.className = "contact-content";
+//   const mediaContent = document.createElement("div");
+//   mediaContent.className = "contact-content";
 
-  const content = document.createElement("div");
-  content.className = "content";
+//   const content = document.createElement("div");
+//   content.className = "content";
 
-  const h4 = document.createElement("h2");
-  h4.textContent = contactData.full_name;
+//   const h4 = document.createElement("h2");
+//   h4.textContent = contactData.full_name;
 
-  const pEmail = document.createElement("p");
-  pEmail.textContent = contactData.email;
+//   const pEmail = document.createElement("p");
+//   pEmail.textContent = contactData.email;
 
-  const pPhone = document.createElement("p");
-  pPhone.textContent = `Phone #: ${contactData.phone_number}`;
+//   const pPhone = document.createElement("p");
+//   pPhone.textContent = `Phone #: ${contactData.phone_number}`;
 
-  const editBtn = document.createElement("button");
-  editBtn.className = "button is-info is-light is-small is-rounded";
-  editBtn.textContent = "Edit";
+//   const editBtn = document.createElement("button");
+//   editBtn.className = "button is-info is-light is-small is-rounded";
+//   editBtn.textContent = "Edit";
 
-  const deleteBtn = document.createElement("button");
-  deleteBtn.className = "button is-danger is-light is-small is-rounded";
-  deleteBtn.textContent = "Delete";
+//   const deleteBtn = document.createElement("button");
+//   deleteBtn.className = "button is-danger is-light is-small is-rounded";
+//   deleteBtn.textContent = "Delete";
 
-  content.append(h4, pEmail, pPhone, editBtn, deleteBtn);
-  mediaContent.appendChild(content);
-  article.appendChild(mediaContent);
+//   content.append(h4, pEmail, pPhone, editBtn, deleteBtn);
+//   mediaContent.appendChild(content);
+//   article.appendChild(mediaContent);
 
-  return article;
-};
+//   return article;
+// };
 
-//Add new contact button
+//Add new contact display
 const addContactBtn = document.querySelector("#add-contact");
 const form = document.querySelector("form");
 
@@ -149,31 +152,31 @@ addContactBtn.addEventListener("click", () => {
   form.style.display = "block";
 });
 
-//POST fetch request to add a contact
-const postNewData = async (path, data) => {
-  try {
-    const url = new URL(baseURL + path);
-    const submission = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: data,
-    });
+// //POST fetch request to add a contact
+// const postNewData = async (path, data) => {
+//   try {
+//     const url = new URL(baseURL + path);
+//     const submission = await fetch(url, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json; charset=utf-8",
+//       },
+//       body: data,
+//     });
 
-    if (submission.status === 201) {
-      message.textContent = "";
-      const responseData = await submission.json();
-      console.log(
-        `This contact was sucessfully added: ${JSON.stringify(responseData)}`
-      );
-      return responseData;
-    } else {
-      throw new Error(`HTTP request error: ${submission.status}`);
-    }
-  } catch (err) {
-    message.textContent = GENERIC_ERROR_MESSAGE;
-    console.error("Could not send data:", err);
-    return null;
-  }
-};
+//     if (submission.status === 201) {
+//       message.textContent = "";
+//       const responseData = await submission.json();
+//       console.log(
+//         `This contact was sucessfully added: ${JSON.stringify(responseData)}`
+//       );
+//       return responseData;
+//     } else {
+//       throw new Error(`HTTP request error: ${submission.status}`);
+//     }
+//   } catch (err) {
+//     message.textContent = GENERIC_ERROR_MESSAGE;
+//     console.error("Could not send data:", err);
+//     return null;
+//   }
+// };
