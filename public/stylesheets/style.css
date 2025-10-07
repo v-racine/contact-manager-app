@@ -116,10 +116,11 @@ figure.image img {
   /* Typography */
   font-family: Arial, sans-serif; /* A clear, readable font */
   line-height: 1.6; /* Good spacing between lines */
+  background-color: #bcc2d0;
 }
 
 /* Optional: Styling for the content inside */
-.media h2 {
+.content h2 {
   color: #333; /* Darker color for a title if you have one */
   margin-top: 0; /* Remove top margin from title */
   border-bottom: 1px solid gold; /* Separator line */
@@ -127,7 +128,7 @@ figure.image img {
   margin-bottom: 15px;
 }
 
-.media p {
+.content p {
   margin: 5px 0; /* Space out the individual info lines */
   color: #333; /* Slightly lighter text color */
 }
