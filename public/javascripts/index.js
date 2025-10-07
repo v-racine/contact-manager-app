@@ -1,5 +1,7 @@
 const baseURL = "http://localhost:3000";
 
+const GENERIC_ERROR_MESSAGE =
+  "Sorry, something went wrong. Please try again later.";
 const searchInputEle = document.querySelector("#search-input");
 const dropdown = document.querySelector(".dropdown");
 const resultsWrapper = document.querySelector(".results");
@@ -19,8 +21,7 @@ const fetchData = async (path) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    message.textContent =
-      "Sorry, something went wrong. Please try again later.";
+    message.textContent = GENERIC_ERROR_MESSAGE;
     console.error("Could not fetch data:", error);
     return null;
   }
@@ -171,8 +172,7 @@ const postNewData = async (path, data) => {
       throw new Error(`HTTP request error: ${submission.status}`);
     }
   } catch (err) {
-    message.textContent =
-      "Sorry, something went wrong. Please try again later.";
+    message.textContent = GENERIC_ERROR_MESSAGE;
     console.error("Could not send data:", err);
     return null;
   }
