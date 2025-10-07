@@ -140,3 +140,31 @@ addContactBtn.addEventListener("click", () => {
   contactContainer.textContent = "";
   form.style.display = "block";
 });
+
+//POST fetch request to add a contact
+const postNewData = async (path, data) => {
+  try {
+    const url = new URL(baseURL + path);
+    const submission = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: data,
+    });
+
+    if (submission.status === 201) {
+      // STUB: Add message for user
+      console.log(
+        `This contact was sucessfully added: ${await submission.text()}`
+      );
+    } else {
+      throw new Error(`HTTP request error: ${submission.status}`);
+    }
+  } catch (err) {
+    // STUB: Add message for user
+    // message.textContent =
+    //   "Sorry, something went wrong. Please try again later.";
+    console.error(err);
+  }
+};
