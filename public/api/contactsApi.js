@@ -1,14 +1,18 @@
-const baseURL = "http://localhost:3000";
-
-//GET fetch request for contacts
-export const fetchData = async (path) => {
-  const url = new URL(baseURL + path);
-
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
+export async function getAllContacts() {
+  const res = await fetch("api/contacts");
+  if (!res.ok) {
+    throw new Error(`Failed to fetch contacts. Status: ${res.status}`);
   }
-  return await response.json();
-};
+  return res.json();
+}
 
-// Add createContact, updateContact, deleteContact, getContact
+export async function getContact(id) {
+  const res = await fetch(`api/contacts/${id}`);
+  if (!res.ok) {
+    if (!res.ok)
+      throw new Error(
+        `Failed to fetch contact with ID ${id}. Status: ${res.status}`
+      );
+  }
+  return res.json();
+}
