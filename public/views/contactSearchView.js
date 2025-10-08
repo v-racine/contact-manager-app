@@ -1,12 +1,17 @@
+import { debounce } from "../utils/domUtils.js";
+
 let _onContactSelect = null; // private variable to store callback
 
 export function initSearchView({ onSearchInput, onContactSelect }) {
   const input = document.getElementById("search-input");
   _onContactSelect = onContactSelect;
 
-  input.addEventListener("input", () => {
-    onSearchInput(input.value);
-  });
+  input.addEventListener(
+    "input",
+    debounce(() => {
+      onSearchInput(input.value);
+    })
+  );
 }
 
 export function renderSearchResults(contacts) {

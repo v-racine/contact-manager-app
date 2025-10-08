@@ -41,7 +41,8 @@ async function handleViewAllContacts() {
     const contacts = await getAllContacts();
     renderAllContacts(contacts);
   } catch (err) {
-    console.error("Failed to load contacts");
+    message.textContent = GENERIC_ERROR_MESSAGE;
+    console.error("Failed to load contacts:", err);
   }
 }
 
@@ -60,7 +61,6 @@ async function handleSearchInput(query) {
 }
 
 async function handleContactSelect(contactId) {
-  console.log(contactId);
   try {
     const contactData = await getContact(contactId);
 
