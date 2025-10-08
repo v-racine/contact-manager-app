@@ -3,7 +3,7 @@ import {
   renderAllContacts,
   contactTemplate,
 } from "../views/contactListView.js";
-import { initViewAllButton } from "../views/viewAllButtonView.js";
+import { initViewAllContactsButton } from "../views/allContactsButtonView.js";
 import {
   initSearchView,
   renderSearchResults,
@@ -18,7 +18,7 @@ const GENERIC_ERROR_MESSAGE =
 let allContacts = [];
 
 export function initController() {
-  initViewAllButton(handleViewAllContacts);
+  initViewAllContactsButton(handleViewAllContacts);
 
   initSearchView({
     onSearchInput: handleSearchInput,
