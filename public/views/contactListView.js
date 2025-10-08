@@ -1,3 +1,23 @@
+const searchInputEle = document.querySelector("#search-input");
+const dropdown = document.querySelector(".dropdown");
+const resultsWrapper = document.querySelector(".results");
+const contactContainer = document.querySelector(".contact-container");
+const message = document.querySelector("#message-for-user");
+const allContactsBtn = document.querySelector("#all-contacts");
+const form = document.querySelector("form");
+
+export const renderAllContacts = async (contacts) => {
+  form.style.display = "none";
+  message.textContent = "";
+  contactContainer.textContent = "";
+
+  const fragment = document.createDocumentFragment();
+  contacts.forEach((contact) => {
+    fragment.appendChild(contactTemplate(contact));
+  });
+  contactContainer.appendChild(fragment);
+};
+
 const contactTemplate = (contactData) => {
   const article = document.createElement("article");
   article.className = "contact";
