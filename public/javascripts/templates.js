@@ -8,8 +8,8 @@ const contactTemplate = (contactData) => {
   const content = document.createElement("div");
   content.className = "content";
 
-  const h4 = document.createElement("h2");
-  h4.textContent = contactData.full_name;
+  const h2 = document.createElement("h2");
+  h2.textContent = contactData.full_name;
 
   const pEmail = document.createElement("p");
   pEmail.textContent = contactData.email;
@@ -25,7 +25,7 @@ const contactTemplate = (contactData) => {
   deleteBtn.className = "button is-danger is-light is-small is-rounded";
   deleteBtn.textContent = "Delete";
 
-  content.append(h4, pEmail, pPhone, editBtn, deleteBtn);
+  content.append(h2, pEmail, pPhone, editBtn, deleteBtn);
   mediaContent.appendChild(content);
   article.appendChild(mediaContent);
 
