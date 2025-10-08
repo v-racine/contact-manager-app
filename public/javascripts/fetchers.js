@@ -34,6 +34,48 @@ const postNewData = async (path, data) => {
 };
 
 //PUT fetch request to edit existing contact
-const editContactData = async (path, data) => {
-  //STUB
+const updateData = async (path, data) => {
+  const url = new URL(baseURL + path);
+
+  const submission = await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: data, // The updated data for the resource
+  });
+
+  if (submission.ok && submission.status === 201) {
+    const responseData = await submission.json();
+    console.log(
+      `This resource was successfully updated: ${JSON.stringify(responseData)}`
+    );
+    return responseData;
+  } else {
+    throw new Error(`HTTP request error: ${submission.status}`);
+  }
+};
+
+//DELETE fetch request to delete an existing contact
+const deleteData = async (path) => {
+  const url = new URL(baseURL + path);
+
+  const submission = await fetch(url, {
+    method: "DELETE",
+  });
+
+  if (submission.ok) {
+    if (submission.status === 204) {
+      console.log("This resource was successfully deleted.");
+    } else {
+      // Handle cases where the API might return data on deletion (e.g., a confirmation message)
+      const responseData = await submission.json();
+      console.log(
+        `Resource deleted. Server response: ${JSON.stringify(responseData)}`
+      );
+    }
+    return; // Indicate successful deletion
+  } else {
+    throw new Error(`HTTP request error: ${submission.status}`);
+  }
 };
