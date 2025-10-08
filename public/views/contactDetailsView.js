@@ -1,8 +1,12 @@
-import { contactTemplate } from "../views/contactListView.js";
+import { form, contactContainer, message } from "./domElements.js";
+import { contactTemplate } from "./contactTemplate.js";
 
-const form = document.querySelector("form");
-const contactContainer = document.querySelector(".contact-container");
-const message = document.querySelector("#message-for-user");
+const GENERIC_ERROR_MESSAGE =
+  "Sorry, something went wrong. Please try again later.";
+
+export function renderContactDetail(contactData) {
+  contactContainer.appendChild(contactTemplate(contactData));
+}
 
 export function clearContactDetailView() {
   form.style.display = "none";
@@ -11,10 +15,5 @@ export function clearContactDetailView() {
 }
 
 export function showError() {
-  const message = document.querySelector("#message-for-user");
-  message.textContent = "Sorry, something went wrong. Please try again later.";
-}
-
-export function renderContactDetail(contactData) {
-  contactContainer.appendChild(contactTemplate(contactData));
+  message.textContent = GENERIC_ERROR_MESSAGE;
 }
