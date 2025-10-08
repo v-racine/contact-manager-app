@@ -45,7 +45,7 @@ const updateData = async (path, data) => {
     body: data, // The updated data for the resource
   });
 
-  if (submission.ok && submission.status === 200) {
+  if (submission.ok && submission.status === 201) {
     const responseData = await submission.json();
     console.log(
       `This resource was successfully updated: ${JSON.stringify(responseData)}`
@@ -57,7 +57,7 @@ const updateData = async (path, data) => {
 };
 
 //DELETE fetch request to delete an existing contact
-const deleteData = async (path, data) => {
+const deleteData = async (path) => {
   const url = new URL(baseURL + path);
 
   const submission = await fetch(url, {
