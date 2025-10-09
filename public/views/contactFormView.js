@@ -65,3 +65,26 @@ export function fillForm(contact) {
 export function setFormMode(mode = "create") {
   submitBtn.textContent = mode === "edit" ? "Update Contact" : "Add Contact";
 }
+
+export function validateForm(contact) {
+  const errors = [];
+
+  if (!contact.full_name) {
+    errors.push("Full name is required.");
+  }
+
+  if (!contact.email) {
+    errors.push("Email is required.");
+  } else if (!/^\S+@\S+\.\S+$/.test(contact.email)) {
+    errors.push("Please enter a valid email address.");
+  }
+
+  if (!contact.phone_number) {
+    errors.push("Phone number is required.");
+  }
+  // } else if (!/^\d{3}-\d{3}-\d{4}$/.test(contact.phone_number)) {
+  //   errors.push("Phone number must be in the format: '123-456-7890'.");
+  // }
+
+  return errors;
+}
