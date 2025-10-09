@@ -1,4 +1,4 @@
-import { form, contactContainer, message, messageBox } from "./domElements.js";
+import { form, contactContainer, message } from "./domElements.js";
 import { contactTemplate } from "./contactTemplate.js";
 
 const GENERIC_ERROR_MESSAGE =

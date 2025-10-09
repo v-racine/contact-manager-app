@@ -3,6 +3,8 @@ import { form, contactContainer, message, messageBox } from "./domElements.js";
 let _onFormSubmit;
 
 export function initContactFormView({ onFormSubmit }) {
+  if (!form) return;
+
   _onFormSubmit = onFormSubmit;
 
   form.addEventListener("submit", (e) => {
@@ -27,10 +29,11 @@ export function showForm() {
 }
 
 export function resetForm() {
-  form.reset();
+  if (form) form.reset();
 }
 
 export function showFormMessage(message, type = "is-success") {
+  if (!messageBox) return;
   messageBox.style.display = "block";
   messageBox.textContent = message;
   messageBox.className = `notification ${type}`;
