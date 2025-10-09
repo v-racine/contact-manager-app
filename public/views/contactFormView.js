@@ -1,4 +1,10 @@
-import { form, contactContainer, message, messageBox } from "./domElements.js";
+import {
+  form,
+  contactContainer,
+  message,
+  messageBox,
+  cancelBtn,
+} from "./domElements.js";
 
 let _onFormSubmit;
 
@@ -19,6 +25,12 @@ export function initContactFormView({ onFormSubmit }) {
 
     _onFormSubmit(contact);
   });
+
+  // 🧼 Cancel button clears and hides form
+  cancelBtn.addEventListener("click", () => {
+    resetForm();
+    hideForm();
+  });
 }
 
 export function showForm() {
@@ -30,6 +42,10 @@ export function showForm() {
 
 export function resetForm() {
   if (form) form.reset();
+}
+
+export function hideForm() {
+  if (form) form.style.display = "none";
 }
 
 export function showFormMessage(message, type = "is-success") {
