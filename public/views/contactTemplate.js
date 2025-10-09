@@ -1,7 +1,6 @@
-export const contactTemplate = (contactData) => {
+export const contactTemplate = (contactData, { onDelete }) => {
   const article = document.createElement("article");
   article.className = "contact";
-
   const mediaContent = document.createElement("div");
   mediaContent.className = "contact-content";
 
@@ -24,6 +23,9 @@ export const contactTemplate = (contactData) => {
   const deleteBtn = document.createElement("button");
   deleteBtn.className = "button is-danger is-light is-small is-rounded";
   deleteBtn.textContent = "Delete";
+  deleteBtn.addEventListener("click", () => {
+    onDelete?.(contactData.id);
+  });
 
   content.append(h2, pEmail, pPhone, editBtn, deleteBtn);
   mediaContent.appendChild(content);

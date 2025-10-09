@@ -32,3 +32,13 @@ export async function createContact(contactData) {
 
   return await res.json();
 }
+
+export async function deleteContact(contactId) {
+  const res = await fetch(`api/contacts/${contactId}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to delete contact ${contactId}`);
+  }
+}
