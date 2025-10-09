@@ -31,6 +31,7 @@ export function initContactFormView({ onFormSubmit }) {
   cancelBtn.addEventListener("click", () => {
     resetForm();
     hideForm();
+    setFormMode("create");
   });
 }
 

@@ -48,7 +48,7 @@ export async function updateContact(contactId, data) {
 }
 
 export async function deleteContact(contactId) {
-  const res = await fetch(`api/contacts/${contactId} poop`, {
+  const res = await fetch(`api/contacts/${contactId}`, {
     method: "DELETE",
   });
 

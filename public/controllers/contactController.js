@@ -92,25 +92,64 @@ async function handleContactSelect(contactId) {
   }
 }
 
+// async function handleFormSubmit(contactData) {
+//   try {
+//     if (editingContactId) {
+//       const updatedContact = await updateContact(editingContactId, contactData);
+//       editingContactId = null;
+//       showFormMessage(
+//         `Contact updated: ${updatedContact.full_name}`,
+//         "is-success"
+//       );
+//     } else {
+//       const newContact = await createContact(contactData);
+//       showFormMessage(`Contact added: ${newContact.full_name}`, "is-success");
+//     }
+//     //refresh
+//     allContacts = await getAllContacts();
+//     renderAllContacts(allContacts, {
+//       onEdit: handleEditContact,
+//       onDelete: handleDeleteContact,
+//     });
+//     resetForm();
+//     hideForm();
+//     setFormMode("create");
+//   } catch (error) {
+//     showFormMessage("Failed to add or update contact.", "is-danger");
+//     console.error("Error submitting form:", error);
+//   }
+// }
+
+function refreshContactListView() {
+  renderAllContacts(allContacts, {
+    onEdit: handleEditContact,
+    onDelete: handleDeleteContact,
+  });
+}
+
 async function handleFormSubmit(contactData) {
   try {
     if (editingContactId) {
       const updatedContact = await updateContact(editingContactId, contactData);
-      editingContactId = null;
+      const index = allContacts.findIndex((c) => c.id === editingContactId);
+      if (index !== -1) {
+        allContacts[index] = updatedContact;
+      } else {
+        // As a fallback, refetch if the contact wasn't in the local cache
+        allContacts = await getAllContacts();
+      }
       showFormMessage(
         `Contact updated: ${updatedContact.full_name}`,
         "is-success"
       );
+      editingContactId = null;
     } else {
       const newContact = await createContact(contactData);
+      allContacts.push(newContact);
       showFormMessage(`Contact added: ${newContact.full_name}`, "is-success");
     }
-    //refresh
-    allContacts = await getAllContacts();
-    renderAllContacts(allContacts, {
-      onEdit: handleEditContact,
-      onDelete: handleDeleteContact,
-    });
+
+    refreshContactListView();
     resetForm();
     hideForm();
     setFormMode("create");
