@@ -86,6 +86,7 @@ async function handleContactSelect(contactId) {
 async function handleFormSubmit(contactData) {
   try {
     const newContact = await createContact(contactData);
+    allContacts.push(newContact);
     resetForm();
     showFormMessage(`Contact added: ${newContact.full_name}`, "is-success");
   } catch (error) {

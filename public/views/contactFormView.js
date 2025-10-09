@@ -1,11 +1,10 @@
-import { form, contactContainer, message } from "./domElements.js";
+import { form, contactContainer, message, messageBox } from "./domElements.js";
 
 let _onFormSubmit;
 
 export function initContactFormView({ onFormSubmit }) {
   _onFormSubmit = onFormSubmit;
 
-  // const form = document.querySelector("form");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -13,7 +12,7 @@ export function initContactFormView({ onFormSubmit }) {
     const contact = {
       full_name: formData.get("full_name"),
       email: formData.get("email"),
-      phone: formData.get("phone"),
+      phone_number: formData.get("phone"),
     };
 
     _onFormSubmit(contact);
@@ -23,16 +22,16 @@ export function initContactFormView({ onFormSubmit }) {
 export function showForm() {
   message.textContent = "";
   contactContainer.textContent = "";
+  messageBox.style.display = "none";
   if (form) form.style.display = "block";
 }
 
 export function resetForm() {
-  // const form = document.querySelector("form");
   form.reset();
 }
 
 export function showFormMessage(message, type = "is-success") {
-  const messageBox = document.querySelector("#form-message");
+  messageBox.style.display = "block";
   messageBox.textContent = message;
   messageBox.className = `notification ${type}`;
 }
