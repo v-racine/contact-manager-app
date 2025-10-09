@@ -110,12 +110,13 @@ async function handleDeleteContact(contactId) {
 
   try {
     await deleteContact(contactId);
-    allContacts = await getAllContacts(); // refresh cache
+    // allContacts = await getAllContacts(); // refresh cache
+    allContacts = allContacts.filter((contact) => contact.id !== contactId);
     renderAllContacts(allContacts, {
       onDelete: handleDeleteContact,
     });
   } catch (error) {
+    showError();
     console.error("Failed to delete contact:", error);
-    alert("Something went wrong. The contact could not be deleted.");
   }
 }

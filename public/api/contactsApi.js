@@ -34,7 +34,7 @@ export async function createContact(contactData) {
 }
 
 export async function deleteContact(contactId) {
-  const res = await fetch(`api/contacts/${contactId}`, {
+  const res = await fetch(`api/contacts/${contactId} poop`, {
     method: "DELETE",
   });
 
