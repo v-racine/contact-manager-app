@@ -4,6 +4,8 @@ let _onContactSelect = null; // private variable to store callback
 
 export function initSearchView({ onSearchInput, onContactSelect }) {
   const input = document.getElementById("search-input");
+  const dropdown = document.querySelector(".dropdown");
+
   _onContactSelect = onContactSelect;
 
   input.addEventListener(
@@ -12,6 +14,13 @@ export function initSearchView({ onSearchInput, onContactSelect }) {
       onSearchInput(input.value);
     })
   );
+
+  document.addEventListener("click", (e) => {
+    if (!input.contains(e.target)) {
+      dropdown.classList.remove("is-active");
+      input.value = "";
+    }
+  });
 }
 
 export function renderSearchResults(contacts) {
