@@ -1,4 +1,8 @@
-import { getAllContacts, getContact } from "../api/contactsApi.js";
+import {
+  getAllContacts,
+  getContact,
+  createContact,
+} from "../api/contactsApi.js";
 import { renderAllContacts } from "../views/contactListView.js";
 import { initViewAllContactsButton } from "../views/allContactsButtonView.js";
 import {
@@ -10,6 +14,13 @@ import {
   showError,
   renderContactDetail,
 } from "../views/contactDetailsView.js";
+import {
+  initContactFormView,
+  showForm,
+  resetForm,
+  showFormMessage,
+} from "../views/contactFormView.js";
+import { initAddContactButton } from "../views/addContactButtonView.js";
 
 let allContacts = [];
 
@@ -20,6 +31,9 @@ export function initController() {
     onSearchInput: handleSearchInput,
     onContactSelect: handleContactSelect,
   });
+
+  initContactFormView({ onFormSubmit: handleFormSubmit });
+  initAddContactButton(handleAddContactClick);
 
   preloadContacts(); // Preload for search
 }
@@ -67,4 +81,20 @@ async function handleContactSelect(contactId) {
     console.error(`Could not fetch contact with ID ${contactId}:`, error);
     return;
   }
+}
+
+async function handleFormSubmit(contactData) {
+  try {
+    const newContact = await createContact(contactData);
+    allContacts.push(newContact);
+    resetForm();
+    showFormMessage(`Contact added: ${newContact.full_name}`, "is-success");
+  } catch (error) {
+    showFormMessage("Failed to add contact.", "is-danger");
+    console.error("Error creating contact:", error);
+  }
+}
+
+function handleAddContactClick() {
+  showForm();
 }
