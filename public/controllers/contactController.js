@@ -3,6 +3,7 @@ import {
   getContact,
   createContact,
   deleteContact,
+  updateContact,
 } from "../api/contactsApi.js";
 import { renderAllContacts } from "../views/contactListView.js";
 import { initViewAllContactsButton } from "../views/allContactsButtonView.js";
@@ -18,12 +19,16 @@ import {
 import {
   initContactFormView,
   showForm,
+  hideForm,
   resetForm,
   showFormMessage,
+  fillForm,
+  setFormMode,
 } from "../views/contactFormView.js";
 import { initAddContactButton } from "../views/addContactButtonView.js";
 
 let allContacts = [];
+let editingContactId = null; //edit tracker
 
 export function initController() {
   initViewAllContactsButton(handleViewAllContacts);
@@ -52,6 +57,7 @@ async function handleViewAllContacts() {
   try {
     const contacts = await getAllContacts();
     renderAllContacts(contacts, {
+      onEdit: handleEditContact,
       onDelete: handleDeleteContact,
     });
   } catch (err) {
@@ -86,15 +92,70 @@ async function handleContactSelect(contactId) {
   }
 }
 
+// async function handleFormSubmit(contactData) {
+//   try {
+//     if (editingContactId) {
+//       const updatedContact = await updateContact(editingContactId, contactData);
+//       editingContactId = null;
+//       showFormMessage(
+//         `Contact updated: ${updatedContact.full_name}`,
+//         "is-success"
+//       );
+//     } else {
+//       const newContact = await createContact(contactData);
+//       showFormMessage(`Contact added: ${newContact.full_name}`, "is-success");
+//     }
+//     //refresh
+//     allContacts = await getAllContacts();
+//     renderAllContacts(allContacts, {
+//       onEdit: handleEditContact,
+//       onDelete: handleDeleteContact,
+//     });
+//     resetForm();
+//     hideForm();
+//     setFormMode("create");
+//   } catch (error) {
+//     showFormMessage("Failed to add or update contact.", "is-danger");
+//     console.error("Error submitting form:", error);
+//   }
+// }
+
+function refreshContactListView() {
+  renderAllContacts(allContacts, {
+    onEdit: handleEditContact,
+    onDelete: handleDeleteContact,
+  });
+}
+
 async function handleFormSubmit(contactData) {
   try {
-    const newContact = await createContact(contactData);
-    allContacts.push(newContact);
+    if (editingContactId) {
+      const updatedContact = await updateContact(editingContactId, contactData);
+      const index = allContacts.findIndex((c) => c.id === editingContactId);
+      if (index !== -1) {
+        allContacts[index] = updatedContact;
+      } else {
+        // As a fallback, refetch if the contact wasn't in the local cache
+        allContacts = await getAllContacts();
+      }
+      showFormMessage(
+        `Contact updated: ${updatedContact.full_name}`,
+        "is-success"
+      );
+      editingContactId = null;
+    } else {
+      const newContact = await createContact(contactData);
+      allContacts.push(newContact);
+      showFormMessage(`Contact added: ${newContact.full_name}`, "is-success");
+    }
+
+    refreshContactListView();
     resetForm();
-    showFormMessage(`Contact added: ${newContact.full_name}`, "is-success");
+    hideForm();
+    setFormMode("create");
   } catch (error) {
-    showFormMessage("Failed to add contact.", "is-danger");
-    console.error("Error creating contact:", error);
+    showFormMessage("Failed to add or update contact.", "is-danger");
+    console.error("Error submitting form:", error);
   }
 }
 
@@ -113,10 +174,18 @@ async function handleDeleteContact(contactId) {
     // allContacts = await getAllContacts(); // refresh cache
     allContacts = allContacts.filter((contact) => contact.id !== contactId);
     renderAllContacts(allContacts, {
+      onEdit: handleEditContact,
       onDelete: handleDeleteContact,
     });
   } catch (error) {
     showError();
     console.error("Failed to delete contact:", error);
   }
+}
+
+function handleEditContact(contact) {
+  editingContactId = contact.id;
+  fillForm(contact);
+  setFormMode("edit");
+  showForm();
 }
