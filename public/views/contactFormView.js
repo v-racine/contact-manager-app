@@ -27,7 +27,6 @@ export function initContactFormView({ onFormSubmit }) {
     _onFormSubmit(contact);
   });
 
-  // 🧼 Cancel button clears and hides form
   cancelBtn.addEventListener("click", () => {
     resetForm();
     hideForm();

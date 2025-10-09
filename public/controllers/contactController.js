@@ -27,8 +27,8 @@ import {
 } from "../views/contactFormView.js";
 import { initAddContactButton } from "../views/addContactButtonView.js";
 
-let allContacts = [];
-let editingContactId = null; //edit tracker
+let allContacts = []; //cache
+let editingContactId = null; //editing tracker
 
 export function initController() {
   initViewAllContactsButton(handleViewAllContacts);
@@ -95,34 +95,6 @@ async function handleContactSelect(contactId) {
   }
 }
 
-// async function handleFormSubmit(contactData) {
-//   try {
-//     if (editingContactId) {
-//       const updatedContact = await updateContact(editingContactId, contactData);
-//       editingContactId = null;
-//       showFormMessage(
-//         `Contact updated: ${updatedContact.full_name}`,
-//         "is-success"
-//       );
-//     } else {
-//       const newContact = await createContact(contactData);
-//       showFormMessage(`Contact added: ${newContact.full_name}`, "is-success");
-//     }
-//     //refresh
-//     allContacts = await getAllContacts();
-//     renderAllContacts(allContacts, {
-//       onEdit: handleEditContact,
-//       onDelete: handleDeleteContact,
-//     });
-//     resetForm();
-//     hideForm();
-//     setFormMode("create");
-//   } catch (error) {
-//     showFormMessage("Failed to add or update contact.", "is-danger");
-//     console.error("Error submitting form:", error);
-//   }
-// }
-
 function refreshContactListView() {
   renderAllContacts(allContacts, {
     onEdit: handleEditContact,
@@ -134,7 +106,9 @@ async function handleFormSubmit(contactData) {
   try {
     if (editingContactId) {
       const updatedContact = await updateContact(editingContactId, contactData);
-      const index = allContacts.findIndex((c) => c.id === editingContactId);
+      const index = allContacts.findIndex(
+        (contact) => contact.id === editingContactId
+      );
       if (index !== -1) {
         allContacts[index] = updatedContact;
       } else {

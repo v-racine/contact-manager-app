@@ -1,7 +1,7 @@
 import { form, contactContainer, message } from "./domElements.js";
 import { contactTemplate } from "./contactTemplate.js";
 
-export async function renderAllContacts(contacts, { onEdit, onDelete } = {}) {
+export function renderAllContacts(contacts, { onEdit, onDelete } = {}) {
   form.style.display = "none";
   message.textContent = "";
   contactContainer.textContent = "";
