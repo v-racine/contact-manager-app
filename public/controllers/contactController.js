@@ -84,7 +84,10 @@ async function handleContactSelect(contactId) {
   try {
     const contactData = await getContact(contactId);
     clearContactDetailView();
-    renderContactDetail(contactData);
+    renderContactDetail(contactData, {
+      onEdit: handleEditContact,
+      onDelete: handleDeleteContact,
+    });
   } catch (error) {
     showError();
     console.error(`Could not fetch contact with ID ${contactId}:`, error);
