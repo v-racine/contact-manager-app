@@ -2,6 +2,7 @@ import {
   getAllContacts,
   getContact,
   createContact,
+  deleteContact,
 } from "../api/contactsApi.js";
 import { renderAllContacts } from "../views/contactListView.js";
 import { initViewAllContactsButton } from "../views/allContactsButtonView.js";
@@ -50,7 +51,9 @@ async function preloadContacts() {
 async function handleViewAllContacts() {
   try {
     const contacts = await getAllContacts();
-    renderAllContacts(contacts);
+    renderAllContacts(contacts, {
+      onDelete: handleDeleteContact,
+    });
   } catch (err) {
     showError();
     console.error("Failed to load contacts:", err);
@@ -97,4 +100,23 @@ async function handleFormSubmit(contactData) {
 
 function handleAddContactClick() {
   showForm();
+}
+
+async function handleDeleteContact(contactId) {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this contact?"
+  );
+  if (!confirmDelete) return;
+
+  try {
+    await deleteContact(contactId);
+    // allContacts = await getAllContacts(); // refresh cache
+    allContacts = allContacts.filter((contact) => contact.id !== contactId);
+    renderAllContacts(allContacts, {
+      onDelete: handleDeleteContact,
+    });
+  } catch (error) {
+    showError();
+    console.error("Failed to delete contact:", error);
+  }
 }
