@@ -33,6 +33,20 @@ export async function createContact(contactData) {
   return await res.json();
 }
 
+export async function updateContact(contactId, data) {
+  const res = await fetch(`api/contacts/${contactId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to update contact");
+  }
+
+  return await res.json();
+}
+
 export async function deleteContact(contactId) {
   const res = await fetch(`api/contacts/${contactId} poop`, {
     method: "DELETE",

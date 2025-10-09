@@ -4,6 +4,7 @@ import {
   message,
   messageBox,
   cancelBtn,
+  submitBtn,
 } from "./domElements.js";
 
 let _onFormSubmit;
@@ -53,4 +54,14 @@ export function showFormMessage(message, type = "is-success") {
   messageBox.style.display = "block";
   messageBox.textContent = message;
   messageBox.className = `notification ${type}`;
+}
+
+export function fillForm(contact) {
+  form.full_name.value = contact.full_name;
+  form.email.value = contact.email;
+  form.phone.value = contact.phone_number;
+}
+
+export function setFormMode(mode = "create") {
+  submitBtn.textContent = mode === "edit" ? "Update Contact" : "Add Contact";
 }

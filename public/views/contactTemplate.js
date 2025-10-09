@@ -1,4 +1,4 @@
-export const contactTemplate = (contactData, { onDelete }) => {
+export const contactTemplate = (contactData, { onEdit, onDelete }) => {
   const article = document.createElement("article");
   article.className = "contact";
   const mediaContent = document.createElement("div");
@@ -19,6 +19,9 @@ export const contactTemplate = (contactData, { onDelete }) => {
   const editBtn = document.createElement("button");
   editBtn.className = "button is-info is-light is-small is-rounded";
   editBtn.textContent = "Edit";
+  editBtn.addEventListener("click", () => {
+    onEdit?.(contactData);
+  });
 
   const deleteBtn = document.createElement("button");
   deleteBtn.className = "button is-danger is-light is-small is-rounded";
