@@ -5,7 +5,7 @@ const GENERIC_ERROR_MESSAGE =
   "Sorry, something went wrong. Please try again later.";
 
 export function renderContactDetail(contactData) {
-  contactContainer.appendChild(contactTemplate(contactData));
+  contactContainer.appendChild(contactTemplate(contactData, {}));
 }
 
 export function clearContactDetailView() {

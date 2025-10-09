@@ -64,25 +64,15 @@ fieldset {
 .hidden {
   display: none;
 }
-/* 
-figure.image {
-  display: flex;
-  justify-content: center;
-  background-color: black;
-}
 
-figure.image img {
-  width: 128px;
-} */
-
-/* .notification {
+.notification {
   margin-top: 20px;
 }
 
 .results {
   max-height: 500px;
   overflow-y: scroll;
-} */
+}
 
 .title .icon {
   margin-left: 15px;
