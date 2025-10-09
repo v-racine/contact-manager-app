@@ -24,6 +24,7 @@ import {
   showFormMessage,
   fillForm,
   setFormMode,
+  validateForm,
 } from "../views/contactFormView.js";
 import { initAddContactButton } from "../views/addContactButtonView.js";
 
@@ -103,6 +104,12 @@ function refreshContactListView() {
 }
 
 async function handleFormSubmit(contactData) {
+  const errors = validateForm(contactData);
+  if (errors.length) {
+    showFormMessage(errors.join(" "), "is-danger");
+    return;
+  }
+
   try {
     if (editingContactId) {
       const updatedContact = await updateContact(editingContactId, contactData);
