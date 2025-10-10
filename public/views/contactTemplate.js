@@ -19,17 +19,35 @@ export const contactTemplate = (
   const pPhone = document.createElement("p");
   pPhone.textContent = `Phone #: ${contactData.phone_number}`;
 
-  const pTags = document.createElement("p");
-  if (contactData.tags) {
-    pTags.className = "tag is-link is-light clickable-tag";
-    pTags.textContent = contactData.tags;
+  // const pTags = document.createElement("p");
+  // if (contactData.tags) {
+  //   pTags.className = "tag is-link is-light clickable-tag";
+  //   pTags.textContent = contactData.tags;
 
-    pTags.addEventListener("click", () => {
-      onTagClick?.(contactData.tags);
+  //   pTags.addEventListener("click", () => {
+  //     onTagClick?.(contactData.tags);
+  //   });
+  // }
+
+  const tagsContainer = document.createElement("div");
+  tagsContainer.className = "tags";
+
+  if (contactData.tags) {
+    contactData.tags.split(",").forEach((tagStr) => {
+      const tag = tagStr.trim();
+      if (!tag) return;
+
+      const tagEle = document.createElement("span");
+      tagEle.className = "tag is-link is-light clickable-tag";
+      tagEle.textContent = tag;
+
+      tagEle.addEventListener("click", () => {
+        onTagClick?.(tag);
+      });
+
+      tagsContainer.appendChild(tagEle);
     });
   }
-
-  const space = document.createElement("p");
 
   const editBtn = document.createElement("button");
   editBtn.className = "button is-info is-light is-small is-rounded";
@@ -45,7 +63,7 @@ export const contactTemplate = (
     onDelete?.(contactData.id);
   });
 
-  content.append(h2, pEmail, pPhone, pTags, space, editBtn, deleteBtn);
+  content.append(h2, pEmail, pPhone, tagsContainer, editBtn, deleteBtn);
   mediaContent.appendChild(content);
   article.appendChild(mediaContent);
 

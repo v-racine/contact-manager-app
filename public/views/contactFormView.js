@@ -22,7 +22,7 @@ export function initContactFormView({ onFormSubmit }) {
       full_name: formData.get("full_name"),
       email: formData.get("email"),
       phone_number: formData.get("phone"),
-      tags: formData.get("tags" || ""),
+      tags: formData.get("tags") || "",
     };
 
     _onFormSubmit(contact);

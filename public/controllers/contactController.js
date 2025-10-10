@@ -178,14 +178,20 @@ function handleEditContact(contact) {
   showForm();
 }
 
-function handleTagClick(tags) {
-  const filtered = allContacts.filter((contact) => contact.tags === tags);
+function handleTagClick(tag) {
+  // const filtered = allContacts.filter((contact) => contact.tags === tags);
 
+  const filtered = allContacts.filter(
+    (contact) =>
+      contact.tags &&
+      contact.tags
+        .split(",")
+        .map((t) => t.trim())
+        .includes(tag)
+  );
   renderAllContacts(filtered, {
     onEdit: handleEditContact,
     onDelete: handleDeleteContact,
     onTagClick: handleTagClick,
   });
-
-  // Optional: show "Clear Filter" button
 }
