@@ -1,4 +1,7 @@
-export const contactTemplate = (contactData, { onEdit, onDelete }) => {
+export const contactTemplate = (
+  contactData,
+  { onEdit, onDelete, onTagClick }
+) => {
   const article = document.createElement("article");
   article.className = "contact";
   const mediaContent = document.createElement("div");
@@ -16,6 +19,18 @@ export const contactTemplate = (contactData, { onEdit, onDelete }) => {
   const pPhone = document.createElement("p");
   pPhone.textContent = `Phone #: ${contactData.phone_number}`;
 
+  const pTags = document.createElement("p");
+  if (contactData.tags) {
+    pTags.className = "tag is-link is-light clickable-tag";
+    pTags.textContent = contactData.tags;
+
+    pTags.addEventListener("click", () => {
+      onTagClick?.(contactData.tags);
+    });
+  }
+
+  const space = document.createElement("p");
+
   const editBtn = document.createElement("button");
   editBtn.className = "button is-info is-light is-small is-rounded";
   editBtn.textContent = "Edit";
@@ -30,7 +45,7 @@ export const contactTemplate = (contactData, { onEdit, onDelete }) => {
     onDelete?.(contactData.id);
   });
 
-  content.append(h2, pEmail, pPhone, editBtn, deleteBtn);
+  content.append(h2, pEmail, pPhone, pTags, space, editBtn, deleteBtn);
   mediaContent.appendChild(content);
   article.appendChild(mediaContent);
 
