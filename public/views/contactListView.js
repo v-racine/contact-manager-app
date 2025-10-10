@@ -3,7 +3,7 @@ import { contactTemplate } from "./contactTemplate.js";
 
 export function renderAllContacts(
   contacts,
-  { onEdit, onDelete, onTagClick } = {}
+  { onEdit, onDelete, onTagClick } = {},
 ) {
   form.style.display = "none";
   message.textContent = "";
@@ -12,7 +12,7 @@ export function renderAllContacts(
   const fragment = document.createDocumentFragment();
   contacts.forEach((contact) => {
     fragment.appendChild(
-      contactTemplate(contact, { onEdit, onDelete, onTagClick })
+      contactTemplate(contact, { onEdit, onDelete, onTagClick }),
     );
   });
   contactContainer.appendChild(fragment);
