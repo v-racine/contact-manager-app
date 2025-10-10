@@ -84,9 +84,6 @@ export function validateForm(contact) {
   if (!contact.phone_number) {
     errors.push("Phone number is required.");
   }
-  // } else if (!/^\d{3}-\d{3}-\d{4}$/.test(contact.phone_number)) {
-  //   errors.push("Phone number must be in the format: '123-456-7890'.");
-  // }
 
   return errors;
 }

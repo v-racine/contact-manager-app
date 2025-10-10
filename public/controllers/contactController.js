@@ -56,12 +56,8 @@ async function preloadContacts() {
 
 async function handleViewAllContacts() {
   try {
-    const contacts = await getAllContacts();
-    renderAllContacts(contacts, {
-      onEdit: handleEditContact,
-      onDelete: handleDeleteContact,
-      onTagClick: handleTagClick,
-    });
+    // const contacts = await getAllContacts();
+    refreshContactListView();
   } catch (err) {
     showError();
     console.error("Failed to load contacts:", err);
@@ -98,14 +94,6 @@ async function handleContactSelect(contactId) {
   }
 }
 
-function refreshContactListView() {
-  renderAllContacts(allContacts, {
-    onEdit: handleEditContact,
-    onDelete: handleDeleteContact,
-    onTagClick: handleTagClick,
-  });
-}
-
 async function handleFormSubmit(contactData) {
   const errors = validateForm(contactData);
   if (errors.length) {
@@ -122,7 +110,7 @@ async function handleFormSubmit(contactData) {
       if (index !== -1) {
         allContacts[index] = updatedContact;
       } else {
-        // As a fallback, refetch if the contact wasn't in the local cache
+        //refetch ONLY if the contact wasn't in the local cache
         allContacts = await getAllContacts();
       }
       showFormMessage(
@@ -158,13 +146,8 @@ async function handleDeleteContact(contactId) {
 
   try {
     await deleteContact(contactId);
-    // allContacts = await getAllContacts(); // refresh cache
     allContacts = allContacts.filter((contact) => contact.id !== contactId);
-    renderAllContacts(allContacts, {
-      onEdit: handleEditContact,
-      onDelete: handleDeleteContact,
-      onTagClick: handleTagClick,
-    });
+    refreshContactListView();
   } catch (error) {
     showError();
     console.error("Failed to delete contact:", error);
@@ -179,8 +162,6 @@ function handleEditContact(contact) {
 }
 
 function handleTagClick(tag) {
-  // const filtered = allContacts.filter((contact) => contact.tags === tags);
-
   const filtered = allContacts.filter(
     (contact) =>
       contact.tags &&
@@ -190,6 +171,17 @@ function handleTagClick(tag) {
         .includes(tag)
   );
   renderAllContacts(filtered, {
+    onEdit: handleEditContact,
+    onDelete: handleDeleteContact,
+    onTagClick: handleTagClick,
+  });
+}
+
+/**
+ * Refreshes the contact list view using the cached `allContacts` data.
+ */
+function refreshContactListView() {
+  renderAllContacts(allContacts, {
     onEdit: handleEditContact,
     onDelete: handleDeleteContact,
     onTagClick: handleTagClick,

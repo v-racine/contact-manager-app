@@ -19,16 +19,6 @@ export const contactTemplate = (
   const pPhone = document.createElement("p");
   pPhone.textContent = `Phone #: ${contactData.phone_number}`;
 
-  // const pTags = document.createElement("p");
-  // if (contactData.tags) {
-  //   pTags.className = "tag is-link is-light clickable-tag";
-  //   pTags.textContent = contactData.tags;
-
-  //   pTags.addEventListener("click", () => {
-  //     onTagClick?.(contactData.tags);
-  //   });
-  // }
-
   const tagsContainer = document.createElement("div");
   tagsContainer.className = "tags";
 

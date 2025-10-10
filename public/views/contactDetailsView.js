@@ -4,9 +4,12 @@ import { contactTemplate } from "./contactTemplate.js";
 const GENERIC_ERROR_MESSAGE =
   "Sorry, something went wrong. Please try again later.";
 
-export function renderContactDetail(contactData, { onEdit, onDelete } = {}) {
+export function renderContactDetail(
+  contactData,
+  { onEdit, onDelete, onTagClick } = {}
+) {
   contactContainer.appendChild(
-    contactTemplate(contactData, { onEdit, onDelete })
+    contactTemplate(contactData, { onEdit, onDelete, onTagClick })
   );
 }
 
