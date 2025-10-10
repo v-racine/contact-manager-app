@@ -177,7 +177,9 @@ function handleTagClick(tag) {
   });
 }
 
-//helper
+/**
+ * Refreshes the contact list view using the cached `allContacts` data.
+ */
 function refreshContactListView() {
   renderAllContacts(allContacts, {
     onEdit: handleEditContact,
