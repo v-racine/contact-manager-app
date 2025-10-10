@@ -11,7 +11,7 @@ export async function getContact(id) {
   if (!res.ok) {
     if (!res.ok)
       throw new Error(
-        `Failed to fetch contact with ID ${id}. Status: ${res.status}`
+        `Failed to fetch contact with ID ${id}. Status: ${res.status}`,
       );
   }
   return res.json();
