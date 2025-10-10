@@ -36,9 +36,9 @@
   },
   {
     "full_name": "Slippy",
-    "phone_number": "213-622-1277",
+    "phone_number": "513-622-1277",
     "email": "slip@slippery.com",
-    "tags": null,
+    "tags": "",
     "id": 6
   },
   {
@@ -54,12 +54,5 @@
     "email": "newsy@habs.ca",
     "tags": "family",
     "id": 8
-  },
-  {
-    "full_name": "Yuna",
-    "phone_number": "4184069493",
-    "email": "yuna@ff.ca",
-    "tags": "friend",
-    "id": 9
   }
 ]

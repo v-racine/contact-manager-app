@@ -126,3 +126,12 @@ fieldset {
   margin: 5px 0; /* Space out the individual info lines */
   color: #333; /* Slightly lighter text color */
 }
+
+.has-text-success {
+  background-color: #061477;
+  font-weight: bold;
+}
+
+.has-text-danger {
+  font-weight: bold;
+}

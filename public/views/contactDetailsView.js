@@ -1,5 +1,6 @@
 import { form, contactContainer, message } from "./domElements.js";
 import { contactTemplate } from "./contactTemplate.js";
+import { showNotification } from "./notifications.js";
 
 const GENERIC_ERROR_MESSAGE =
   "Sorry, something went wrong. Please try again later.";
@@ -20,5 +21,5 @@ export function clearContactDetailView() {
 }
 
 export function showError() {
-  message.textContent = GENERIC_ERROR_MESSAGE;
+  showNotification(GENERIC_ERROR_MESSAGE, "error");
 }
