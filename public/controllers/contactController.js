@@ -27,6 +27,7 @@ import {
   validateForm,
 } from "../views/contactFormView.js";
 import { initAddContactButton } from "../views/addContactButtonView.js";
+import { showNotification } from "../views/notifications.js";
 
 let allContacts = []; //cache
 let editingContactId = null; //editing tracker
@@ -56,7 +57,6 @@ async function preloadContacts() {
 
 async function handleViewAllContacts() {
   try {
-    // const contacts = await getAllContacts();
     refreshContactListView();
   } catch (err) {
     showError();
@@ -113,23 +113,20 @@ async function handleFormSubmit(contactData) {
         //refetch ONLY if the contact wasn't in the local cache
         allContacts = await getAllContacts();
       }
-      showFormMessage(
-        `Contact updated: ${updatedContact.full_name}`,
-        "is-success"
-      );
+      refreshContactListView();
+      showNotification(`Contact updated: ${updatedContact.full_name}`);
       editingContactId = null;
     } else {
       const newContact = await createContact(contactData);
       allContacts.push(newContact);
-      showFormMessage(`Contact added: ${newContact.full_name}`, "is-success");
+      refreshContactListView();
+      showNotification(`Contact added: ${newContact.full_name}`);
     }
-
-    refreshContactListView();
     resetForm();
     hideForm();
     setFormMode("create");
   } catch (error) {
-    showFormMessage("Failed to add or update contact.", "is-danger");
+    showError();
     console.error("Error submitting form:", error);
   }
 }
@@ -148,6 +145,7 @@ async function handleDeleteContact(contactId) {
     await deleteContact(contactId);
     allContacts = allContacts.filter((contact) => contact.id !== contactId);
     refreshContactListView();
+    showNotification(`Contact deleted`);
   } catch (error) {
     showError();
     console.error("Failed to delete contact:", error);
