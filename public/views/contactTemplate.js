@@ -1,6 +1,6 @@
 export const contactTemplate = (
   contactData,
-  { onEdit, onDelete, onTagClick }
+  { onEdit, onDelete, onTagClick },
 ) => {
   const article = document.createElement("article");
   article.className = "contact";
