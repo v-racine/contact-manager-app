@@ -22,6 +22,7 @@ export function initContactFormView({ onFormSubmit }) {
       full_name: formData.get("full_name"),
       email: formData.get("email"),
       phone_number: formData.get("phone"),
+      tags: formData.get("tags") || "",
     };
 
     _onFormSubmit(contact);
@@ -60,6 +61,7 @@ export function fillForm(contact) {
   form.full_name.value = contact.full_name;
   form.email.value = contact.email;
   form.phone.value = contact.phone_number;
+  form.tags.value = contact.tags;
 }
 
 export function setFormMode(mode = "create") {

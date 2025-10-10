@@ -60,6 +60,7 @@ async function handleViewAllContacts() {
     renderAllContacts(contacts, {
       onEdit: handleEditContact,
       onDelete: handleDeleteContact,
+      onTagClick: handleTagClick,
     });
   } catch (err) {
     showError();
@@ -88,6 +89,7 @@ async function handleContactSelect(contactId) {
     renderContactDetail(contactData, {
       onEdit: handleEditContact,
       onDelete: handleDeleteContact,
+      onTagClick: handleTagClick,
     });
   } catch (error) {
     showError();
@@ -100,6 +102,7 @@ function refreshContactListView() {
   renderAllContacts(allContacts, {
     onEdit: handleEditContact,
     onDelete: handleDeleteContact,
+    onTagClick: handleTagClick,
   });
 }
 
@@ -160,6 +163,7 @@ async function handleDeleteContact(contactId) {
     renderAllContacts(allContacts, {
       onEdit: handleEditContact,
       onDelete: handleDeleteContact,
+      onTagClick: handleTagClick,
     });
   } catch (error) {
     showError();
@@ -172,4 +176,22 @@ function handleEditContact(contact) {
   fillForm(contact);
   setFormMode("edit");
   showForm();
+}
+
+function handleTagClick(tag) {
+  // const filtered = allContacts.filter((contact) => contact.tags === tags);
+
+  const filtered = allContacts.filter(
+    (contact) =>
+      contact.tags &&
+      contact.tags
+        .split(",")
+        .map((t) => t.trim())
+        .includes(tag)
+  );
+  renderAllContacts(filtered, {
+    onEdit: handleEditContact,
+    onDelete: handleDeleteContact,
+    onTagClick: handleTagClick,
+  });
 }
