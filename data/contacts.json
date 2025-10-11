@@ -35,10 +35,10 @@
     "id": 5
   },
   {
-    "full_name": "Slippy",
-    "phone_number": "213-622-1277",
-    "email": "slip@slippery.com",
-    "tags": null,
+    "full_name": "Lokum Junior",
+    "phone_number": "4134069493",
+    "email": "lj@lokum.ca",
+    "tags": "chicken",
     "id": 6
   },
   {
@@ -59,7 +59,14 @@
     "full_name": "Yuna",
     "phone_number": "4184069493",
     "email": "yuna@ff.ca",
-    "tags": "friend",
+    "tags": "",
     "id": 9
+  },
+  {
+    "full_name": "Jimmy",
+    "phone_number": "4132316698",
+    "email": "jim@test.com",
+    "tags": "foe",
+    "id": 10
   }
 ]
