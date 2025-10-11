@@ -41,7 +41,7 @@ export async function updateContact(contactId, data) {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to update contact");
+    throw new Error(`Failed to update contact: ${contactId}`);
   }
 
   return await res.json();
@@ -53,6 +53,6 @@ export async function deleteContact(contactId) {
   });
 
   if (!res.ok) {
-    throw new Error(`Failed to delete contact ${contactId}`);
+    throw new Error(`Failed to delete contact: ${contactId}`);
   }
 }
