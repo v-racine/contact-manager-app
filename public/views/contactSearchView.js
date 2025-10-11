@@ -12,7 +12,7 @@ export function initSearchView({ onSearchInput, onContactSelect }) {
     "input",
     debounce(() => {
       onSearchInput(input.value);
-    })
+    }),
   );
 
   document.addEventListener("click", (e) => {

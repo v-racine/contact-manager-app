@@ -7,10 +7,10 @@ const GENERIC_ERROR_MESSAGE =
 
 export function renderContactDetail(
   contactData,
-  { onEdit, onDelete, onTagClick } = {}
+  { onEdit, onDelete, onTagClick } = {},
 ) {
   contactContainer.appendChild(
-    contactTemplate(contactData, { onEdit, onDelete, onTagClick })
+    contactTemplate(contactData, { onEdit, onDelete, onTagClick }),
   );
 }
 

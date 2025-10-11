@@ -68,7 +68,7 @@ async function handleSearchInput(query) {
   try {
     const contacts = await getAllContacts();
     const results = contacts.filter((contact) =>
-      contact.full_name.toLowerCase().includes(query.toLowerCase())
+      contact.full_name.toLowerCase().includes(query.toLowerCase()),
     );
     renderSearchResults(results);
   } catch (error) {
@@ -105,7 +105,7 @@ async function handleFormSubmit(contactData) {
     if (editingContactId) {
       const updatedContact = await updateContact(editingContactId, contactData);
       const index = allContacts.findIndex(
-        (contact) => contact.id === editingContactId
+        (contact) => contact.id === editingContactId,
       );
       if (index !== -1) {
         allContacts[index] = updatedContact;
@@ -137,7 +137,7 @@ function handleAddContactClick() {
 
 async function handleDeleteContact(contactId) {
   const confirmDelete = window.confirm(
-    "Are you sure you want to delete this contact?"
+    "Are you sure you want to delete this contact?",
   );
   if (!confirmDelete) return;
 
@@ -166,7 +166,7 @@ function handleTagClick(tag) {
       contact.tags
         .split(",")
         .map((t) => t.trim())
-        .includes(tag)
+        .includes(tag),
   );
   renderAllContacts(filtered, {
     onEdit: handleEditContact,

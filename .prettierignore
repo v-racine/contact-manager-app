@@ -1,0 +1,6 @@
+/node_modules
+/dist
+/build
+public/doc/vendor/
+
+package-lock.json
