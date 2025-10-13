@@ -1,10 +1,5 @@
-import {
-  getAllContacts,
-  getContact,
-  createContact,
-  deleteContact,
-  updateContact,
-} from "../api/contactsApi.js";
+import * as contactsApi from "../api/contactsApi.js";
+import { ContactService } from "../services/contactService.js";
 import { renderAllContacts } from "../views/contactListView.js";
 import { initViewAllContactsButton } from "../views/allContactsButtonView.js";
 import {
@@ -29,8 +24,7 @@ import {
 import { initAddContactButton } from "../views/addContactButtonView.js";
 import { showNotification } from "../views/notifications.js";
 
-let allContacts = []; //cache
-let editingContactId = null; //editing tracker
+const contactService = new ContactService(contactsApi);
 
 export function initController() {
   initViewAllContactsButton(handleViewAllContacts);
@@ -48,7 +42,7 @@ export function initController() {
 
 async function preloadContacts() {
   try {
-    allContacts = await getAllContacts();
+    await contactService.preloadContacts();
   } catch (err) {
     showError();
     console.error("Failed to preload contacts", err);
@@ -66,10 +60,8 @@ async function handleViewAllContacts() {
 
 async function handleSearchInput(query) {
   try {
-    const contacts = await getAllContacts();
-    const results = contacts.filter((contact) =>
-      contact.full_name.toLowerCase().includes(query.toLowerCase()),
-    );
+    const results = contactService.filterContactsByQuery(query);
+
     renderSearchResults(results);
   } catch (error) {
     showError();
@@ -80,7 +72,8 @@ async function handleSearchInput(query) {
 
 async function handleContactSelect(contactId) {
   try {
-    const contactData = await getContact(contactId);
+    const contactData = await contactService.getContactDetail(contactId);
+
     clearContactDetailView();
     renderContactDetail(contactData, {
       onEdit: handleEditContact,
@@ -102,25 +95,20 @@ async function handleFormSubmit(contactData) {
   }
 
   try {
-    if (editingContactId) {
-      const updatedContact = await updateContact(editingContactId, contactData);
-      const index = allContacts.findIndex(
-        (contact) => contact.id === editingContactId,
-      );
-      if (index !== -1) {
-        allContacts[index] = updatedContact;
-      } else {
-        //refetch ONLY if the contact wasn't in the local cache
-        allContacts = await getAllContacts();
-      }
+    const editingId = contactService.getEditingContactId();
+    let resultContact;
+
+    if (editingId) {
+      resultContact = await contactService.updateContact(contactData);
+
       refreshContactListView();
-      showNotification(`Contact updated: ${updatedContact.full_name}`);
-      editingContactId = null;
+      showNotification(`Contact updated: ${resultContact.full_name}`);
+      contactService.setEditingContactId(null);
     } else {
-      const newContact = await createContact(contactData);
-      allContacts.push(newContact);
+      resultContact = await contactService.addContact(contactData);
+
       refreshContactListView();
-      showNotification(`Contact added: ${newContact.full_name}`);
+      showNotification(`Contact added: ${resultContact.full_name}`);
     }
     resetForm();
     hideForm();
@@ -142,8 +130,8 @@ async function handleDeleteContact(contactId) {
   if (!confirmDelete) return;
 
   try {
-    await deleteContact(contactId);
-    allContacts = allContacts.filter((contact) => contact.id !== contactId);
+    await contactService.deleteContact(contactId);
+
     refreshContactListView();
     showNotification(`Contact deleted`);
   } catch (error) {
@@ -153,21 +141,15 @@ async function handleDeleteContact(contactId) {
 }
 
 function handleEditContact(contact) {
-  editingContactId = contact.id;
+  contactService.setEditingContactId(contact.id);
   fillForm(contact);
   setFormMode("edit");
   showForm();
 }
 
 function handleTagClick(tag) {
-  const filtered = allContacts.filter(
-    (contact) =>
-      contact.tags &&
-      contact.tags
-        .split(",")
-        .map((t) => t.trim())
-        .includes(tag),
-  );
+  const filtered = contactService.filterContactsByTag(tag);
+
   renderAllContacts(filtered, {
     onEdit: handleEditContact,
     onDelete: handleDeleteContact,
@@ -179,7 +161,8 @@ function handleTagClick(tag) {
  * Refreshes the contact list view using the cached `allContacts` data.
  */
 function refreshContactListView() {
-  renderAllContacts(allContacts, {
+  const contacts = contactService.getContacts();
+  renderAllContacts(contacts, {
     onEdit: handleEditContact,
     onDelete: handleDeleteContact,
     onTagClick: handleTagClick,
