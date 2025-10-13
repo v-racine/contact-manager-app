@@ -79,7 +79,7 @@ export class ContactService {
     if (index !== -1) {
       this.allContacts[index] = updatedContact;
     } else {
-      await this.preLoadContacts();
+      await this.preloadContacts();
     }
 
     return updatedContact;
@@ -88,10 +88,8 @@ export class ContactService {
   async deleteContact(contactId) {
     await this.api.deleteContact(contactId);
 
-    const newContacts = this.allContacts.filter((contact) => {
+    this.allContacts = this.allContacts.filter((contact) => {
       return contact.id !== contactId;
     });
-
-    this.allContacts = newContacts;
   }
 }
