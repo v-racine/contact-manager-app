@@ -85,7 +85,7 @@ describe("ContactService Unit Tests", () => {
 
   describe("filterContactsByQuery", () => {
     beforeEach(() => {
-      contactService.allContacts = SAMPLE_CONTACTS;
+      contactService.allContacts = JSON.parse(JSON.stringify(SAMPLE_CONTACTS));
     });
 
     it("should return empty array when query is empty string", () => {
@@ -132,7 +132,7 @@ describe("ContactService Unit Tests", () => {
 
   describe("filterContactsByTag", () => {
     beforeEach(() => {
-      contactService.allContacts = SAMPLE_CONTACTS;
+      contactService.allContacts = JSON.parse(JSON.stringify(SAMPLE_CONTACTS));
     });
 
     it("should filter contacts by tag (case insensitive)", () => {
@@ -152,14 +152,25 @@ describe("ContactService Unit Tests", () => {
       expect(results[0].id).toBe(4);
     });
 
-    it("should return empty array for contacts without tags property", () => {
+    it("should not include contacts without a tags property", () => {
+      contactService.allContacts.push({
+        id: 5,
+        full_name: "No Tags",
+        email: "no@tags.com",
+      });
       const results = contactService.filterContactsByTag("work");
-      expect(results.some((c) => c.id === 4)).toBe(false);
+      expect(results.find((c) => c.id === 5)).toBeUndefined();
     });
 
-    it("should return empty array for contacts with null tags", () => {
-      const results = contactService.filterContactsByTag("anything");
-      expect(results.some((c) => c.id === 4)).toBe(false);
+    it("should not include contacts with null tags", () => {
+      contactService.allContacts.push({
+        id: 6,
+        full_name: "Null Tags",
+        email: "null@tags.com",
+        tags: null,
+      });
+      const results = contactService.filterContactsByTag("work");
+      expect(results.some((c) => c.id === 6)).toBe(false);
     });
 
     it("should return empty array when tag not found", () => {
@@ -260,7 +271,7 @@ describe("ContactService Unit Tests", () => {
 
   describe("updateContact", () => {
     beforeEach(() => {
-      contactService.allContacts = SAMPLE_CONTACTS;
+      contactService.allContacts = JSON.parse(JSON.stringify(SAMPLE_CONTACTS));
     });
 
     it("should throw error if no editing contact ID is set", async () => {
@@ -319,7 +330,7 @@ describe("ContactService Unit Tests", () => {
 
   describe("deleteContact", () => {
     beforeEach(() => {
-      contactService.allContacts = SAMPLE_CONTACTS;
+      contactService.allContacts = JSON.parse(JSON.stringify(SAMPLE_CONTACTS));
     });
 
     it("should delete contact via API and remove from allContacts", async () => {
